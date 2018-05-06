@@ -16,7 +16,7 @@
 
 static void console_init(const char * log_file, const char * level_file);
 static int console_print(const char *fmt, ...);
-static int console_log(const char *fmt, ...);
+static int console_log(const char *file, int line,const char *fmt, ...);
 static const char * console_time(char *timestr);
 
 
@@ -78,25 +78,25 @@ static const char * console_time(char *timestr){
     time_t now = time(NULL);
 
     strftime(timestr, 1024, 
-             "%Y-%m-%d %H:%M:%S",
+             "%y-%m-%d,%H:%M:%S",
              localtime(&now));
     return timestr;
 }
 
-static int console_log(const char *fmt, ...){
+static int console_log(const char *file, int line, const char *fmt, ...){
     FILE *fp;
     int retv;
     char timestr[256];
     va_list ap;
     va_start(ap, fmt);
 
-    retv = vprintf(fmt, ap);
+    retv = printf("[LOG] ") + vprintf(fmt, ap);
     if(!console.log_file){
         return retv;
     }
     fp = fopen(console.log_file, "a");
     if(fp){
-        fprintf(fp, "[%s] ", console_time(timestr));
+        fprintf(fp, "[%s][%s:%d] ", console_time(timestr),file,line);
         vfprintf(fp, fmt, ap);
         fclose(fp);
     }

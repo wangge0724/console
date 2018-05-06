@@ -8,6 +8,7 @@ int main(int argc, char**argv){
     for(i=0;;i++){
         printf("write level-file(for exam., echo 7 > /tmp/lvl) then enter:");
         fgetc(stdin);
+        /* print on terminal */
         console.print(LOG_EMERG  "emergency message  (%d)\r\n", 0);
         console.print(LOG_ALERT  "alert message      (%d)\r\n", 1);
         console.print(LOG_CRIT   "critical message   (%d)\r\n", 2);
@@ -17,7 +18,9 @@ int main(int argc, char**argv){
         console.print(LOG_INFO   "information message(%d)\r\n", 6);
         console.print(LOG_DEBUG  "debug message      (%d)\r\n", 7);
         console.print(           "message...         (unknown)\r\n");
-        console.log("LOG-SEQ = %d\r\n", i);
+        /* log into file */
+        console.log  (__FILE__,__LINE__,"LOG-SEQ  = %d\r\n", i);
+        console.vlog (                  "VLOG-SEQ = %d\r\n", i);
     }
     return 0;
 }
