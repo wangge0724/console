@@ -8,6 +8,7 @@
 #ifndef  __CONSOLE_H
 #define  __CONSOLE_H
 
+#include <string.h>
 
 
 #define LOG_EMERG     "<0>" /* system is unusable               */
@@ -44,12 +45,15 @@ typedef struct {
 
 
 
+/* crop absolute path */
+#define __FILENAME__ \
+    ((strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1) : __FILE__))
 
 /**
  * @brief    verbose logging 
  * @usage    console.vlog(fmt, ...);
  */
-#define vlog(...)    log(__FILE__,__LINE__,__VA_ARGS__)
+#define vlog(...)    log(__FILENAME__,__LINE__,__VA_ARGS__)
 
 
 /* global console object */
