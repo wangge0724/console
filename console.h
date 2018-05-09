@@ -49,7 +49,7 @@ typedef struct {
  * @brief    verbose logging 
  * @usage    console.vlog(fmt, ...);
  */
-#define vlog(fmt, ...)    log(__FILE__,__LINE__,fmt,__VA_ARGS__)
+#define vlog(...)    log(__FILE__,__LINE__,__VA_ARGS__)
 
 
 /* global console object */
